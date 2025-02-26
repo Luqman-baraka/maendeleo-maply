@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
@@ -48,7 +47,7 @@ const Index = () => {
             Monitor progress, ensure transparency, and participate in Kenya's development journey.
           </p>
           <div className="flex justify-center gap-4">
-            <Button className="button-primary">View Projects</Button>
+            <Button className="button-primary" onClick={() => window.location.href = '/projects'}>View Projects</Button>
             <Button className="button-secondary">Report Issue</Button>
           </div>
         </section>
