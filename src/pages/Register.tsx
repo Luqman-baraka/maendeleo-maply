@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { checkSupabaseConnection } from "@/lib/supabase";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -17,13 +18,40 @@ const Register = () => {
   const [position, setPosition] = useState("");
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<boolean | null>(null);
   
   const { signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    // Check Supabase connection on component mount
+    const checkConnection = async () => {
+      const status = await checkSupabaseConnection();
+      setConnectionStatus(status);
+      if (!status) {
+        toast({
+          title: "Connection Error",
+          description: "Unable to connect to the database. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    };
+    
+    checkConnection();
+  }, [toast]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!connectionStatus) {
+      toast({
+        title: "Connection Error",
+        description: "Unable to connect to the database. Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     if (password !== confirmPassword) {
       toast({
@@ -37,14 +65,20 @@ const Register = () => {
     setIsLoading(true);
 
     try {
+      console.log("Attempting to sign up with:", { email, role, department, position });
       await signUp(email, password, role, department, position, phone);
       toast({
         title: "Registration successful",
         description: "You can now sign in with your credentials.",
       });
       navigate("/login");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Registration error:", error);
+      toast({
+        title: "Sign up failed",
+        description: error?.message || "There was an issue with registration. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }

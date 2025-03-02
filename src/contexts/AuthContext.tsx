@@ -128,14 +128,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string, role: StaffRole, department: string, position: string, phone?: string) => {
     try {
+      console.log("Starting sign up process...");
+      
       // 1. Create the user in auth
       const { data: authData, error: authError } = await supabase.auth.signUp({ 
         email, 
         password,
       });
       
-      if (authError) throw authError;
-      if (!authData.user) throw new Error('Failed to create user account.');
+      if (authError) {
+        console.error("Auth error during signup:", authError);
+        throw authError;
+      }
+      
+      if (!authData.user) {
+        console.error("No user returned from auth signup");
+        throw new Error('Failed to create user account.');
+      }
+      
+      console.log("User created successfully:", authData.user.id);
       
       // 2. Create the staff profile
       const { error: profileError } = await supabase
@@ -148,7 +159,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           phone
         });
       
-      if (profileError) throw profileError;
+      if (profileError) {
+        console.error("Profile creation error:", profileError);
+        throw profileError;
+      }
+      
+      console.log("Staff profile created successfully");
       
       toast({
         title: 'Account created',
