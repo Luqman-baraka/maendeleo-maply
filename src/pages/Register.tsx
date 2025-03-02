@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -25,14 +24,23 @@ const Register = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check Supabase connection on component mount
     const checkConnection = async () => {
-      const status = await checkSupabaseConnection();
-      setConnectionStatus(status);
-      if (!status) {
+      try {
+        const status = await checkSupabaseConnection();
+        setConnectionStatus(status);
+        if (!status) {
+          toast({
+            title: "Connection Error",
+            description: "Unable to connect to the database. Please try again later or check your network connection.",
+            variant: "destructive",
+          });
+        }
+      } catch (err) {
+        console.error("Error checking connection:", err);
+        setConnectionStatus(false);
         toast({
           title: "Connection Error",
-          description: "Unable to connect to the database. Please try again later.",
+          description: "Unable to verify database connection. Please check your network and try again.",
           variant: "destructive",
         });
       }
@@ -45,12 +53,25 @@ const Register = () => {
     e.preventDefault();
     
     if (!connectionStatus) {
-      toast({
-        title: "Connection Error",
-        description: "Unable to connect to the database. Please try again later.",
-        variant: "destructive",
-      });
-      return;
+      try {
+        const status = await checkSupabaseConnection();
+        setConnectionStatus(status);
+        if (!status) {
+          toast({
+            title: "Connection Error",
+            description: "Still unable to connect to the database. Please check your network connection and try again later.",
+            variant: "destructive",
+          });
+          return;
+        }
+      } catch (err) {
+        toast({
+          title: "Connection Error",
+          description: "Failed to establish a connection with our servers. Please try again later.",
+          variant: "destructive",
+        });
+        return;
+      }
     }
     
     if (password !== confirmPassword) {
