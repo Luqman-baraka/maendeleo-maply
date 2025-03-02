@@ -2,8 +2,12 @@
 import { Button } from "./ui/button";
 import { MenuIcon, Search } from "lucide-react";
 import { Input } from "./ui/input";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
       <div className="container mx-auto px-4">
@@ -12,12 +16,12 @@ const Header = () => {
             <Button variant="ghost" size="icon" className="lg:hidden">
               <MenuIcon className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-semibold text-secondary">Maendeleo Tracker</h1>
+            <Link to="/" className="text-xl font-semibold text-secondary">Maendeleo Tracker</Link>
           </div>
           
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex items-center gap-6">
-              <a href="#projects" className="nav-link">Projects</a>
+              <Link to="/projects" className="nav-link">Projects</Link>
               <a href="#map" className="nav-link">Map</a>
               <a href="#report" className="nav-link">Report</a>
               <a href="#insights" className="nav-link">Insights</a>
@@ -34,7 +38,23 @@ const Header = () => {
                 />
               </div>
             </div>
-            <Button className="button-primary">Report Issue</Button>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <Button variant="outline" onClick={() => window.location.href = "/dashboard"}>
+                  Dashboard
+                </Button>
+                <Button className="button-primary" onClick={() => signOut()}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button variant="outline" onClick={() => window.location.href = "/login"}>
+                  Staff Login
+                </Button>
+                <Button className="button-primary">Report Issue</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
