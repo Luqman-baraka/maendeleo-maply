@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Project } from "@/types/project";
@@ -132,7 +131,7 @@ const projectsData: Project[] = [
         email: "water.access@water.go.ke"
       }
     },
-    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1528&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccb5a630e2f6?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "4",
