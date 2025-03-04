@@ -12,7 +12,7 @@ const projects = [
     status: "ongoing" as const,
     sector: "Infrastructure",
     location: "Mombasa",
-    imageUrl: "https://images.unsplash.com/photo-1545807190-2157ecaa5097?q=80&w=1470&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?q=80&w=1528&auto=format&fit=crop"
   },
   {
     title: "Rural Electrification Project",
