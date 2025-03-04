@@ -22,8 +22,6 @@ const Header = () => {
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex items-center gap-6">
               <Link to="/projects" className="nav-link">Projects</Link>
-              <a href="#map" className="nav-link">Map</a>
-              <a href="#report" className="nav-link">Report</a>
               <a href="#insights" className="nav-link">Insights</a>
             </nav>
           </div>
@@ -48,12 +46,9 @@ const Header = () => {
                 </Button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Button variant="outline" onClick={() => window.location.href = "/login"}>
-                  Staff Login
-                </Button>
-                <Button className="button-primary">Report Issue</Button>
-              </div>
+              <Button variant="outline" onClick={() => window.location.href = "/login"}>
+                Staff Login
+              </Button>
             )}
           </div>
         </div>

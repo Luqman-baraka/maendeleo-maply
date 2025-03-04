@@ -43,4 +43,5 @@ export interface Project {
     name: string;
     contact: Contact;
   };
+  imageUrl?: string;
 }

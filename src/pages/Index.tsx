@@ -1,7 +1,6 @@
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Header from "@/components/Header";
-import ProjectMap from "@/components/ProjectMap";
 import ProjectCard from "@/components/ProjectCard";
 import { MapPin, FileText, TrendingUp, AlertTriangle } from "lucide-react";
 
@@ -13,6 +12,7 @@ const projects = [
     status: "ongoing" as const,
     sector: "Infrastructure",
     location: "Mombasa",
+    imageUrl: "https://images.unsplash.com/photo-1545807190-2157ecaa5097?q=80&w=1470&auto=format&fit=crop"
   },
   {
     title: "Rural Electrification Project",
@@ -21,6 +21,7 @@ const projects = [
     status: "completed" as const,
     sector: "Energy",
     location: "Machakos",
+    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1470&auto=format&fit=crop"
   },
   {
     title: "Community Health Center",
@@ -29,6 +30,7 @@ const projects = [
     status: "delayed" as const,
     sector: "Healthcare",
     location: "Kisumu",
+    imageUrl: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?q=80&w=1528&auto=format&fit=crop"
   },
 ];
 
@@ -48,7 +50,6 @@ const Index = () => {
           </p>
           <div className="flex justify-center gap-4">
             <Button className="button-primary" onClick={() => window.location.href = '/projects'}>View Projects</Button>
-            <Button className="button-secondary">Report Issue</Button>
           </div>
         </section>
 
@@ -66,12 +67,6 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
-        </section>
-
-        {/* Map Section */}
-        <section className="mb-16">
-          <h2 className="section-title">Project Map</h2>
-          <ProjectMap />
         </section>
 
         {/* Projects Section */}

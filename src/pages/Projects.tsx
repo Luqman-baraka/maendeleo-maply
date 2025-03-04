@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Project } from "@/types/project";
@@ -47,7 +46,8 @@ const projectsData: Project[] = [
         phone: "+254 41 2311111",
         email: "info@mombasacounty.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "2",
@@ -391,6 +391,7 @@ const Projects = () => {
                     status={project.progress === 100 ? "completed" : project.progress < 20 ? "ongoing" : "delayed"}
                     sector={project.sector}
                     location={`${project.location.city}, ${project.location.county}`}
+                    imageUrl={project.imageUrl}
                   />
                 </div>
               ))}
