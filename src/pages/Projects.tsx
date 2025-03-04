@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Project } from "@/types/project";
@@ -88,7 +89,8 @@ const projectsData: Project[] = [
         phone: "+254 20 4567890",
         email: "green.schools@education.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "3",
@@ -129,7 +131,8 @@ const projectsData: Project[] = [
         phone: "+254 20 8765432",
         email: "water.access@water.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "4",
@@ -170,7 +173,8 @@ const projectsData: Project[] = [
         phone: "+254 20 2345678",
         email: "digital.education@ict.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "5",
@@ -211,7 +215,8 @@ const projectsData: Project[] = [
         phone: "+254 20 9876543",
         email: "maternal.health@health.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "6",
@@ -252,7 +257,8 @@ const projectsData: Project[] = [
         phone: "+254 20 7654321",
         email: "youth.agribusiness@agriculture.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "7",
@@ -293,7 +299,8 @@ const projectsData: Project[] = [
         phone: "+254 20 6543210",
         email: "rural.roads@transport.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1545807190-2157ecaa5097?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "8",
@@ -334,7 +341,8 @@ const projectsData: Project[] = [
         phone: "+254 20 5432109",
         email: "urban.lighting@nms.go.ke"
       }
-    }
+    },
+    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1528&auto=format&fit=crop"
   }
 ];
 

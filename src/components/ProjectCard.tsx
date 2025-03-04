@@ -21,17 +21,18 @@ const ProjectCard = ({
   location, 
   imageUrl 
 }: ProjectCardProps) => {
+  // Default placeholder image if imageUrl is not provided
+  const defaultImage = "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1470&auto=format&fit=crop";
+  
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {imageUrl && (
-        <div className="w-full h-48 overflow-hidden">
-          <img 
-            src={imageUrl} 
-            alt={title} 
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          />
-        </div>
-      )}
+      <div className="w-full h-48 overflow-hidden">
+        <img 
+          src={imageUrl || defaultImage} 
+          alt={title} 
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </div>
       <CardContent className="p-5">
         <div className="flex justify-between items-start mb-4">
           <div>
