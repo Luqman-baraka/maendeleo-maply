@@ -131,7 +131,7 @@ const projectsData: Project[] = [
         email: "water.access@water.go.ke"
       }
     },
-    imageUrl: "https://images.unsplash.com/photo-1461749280684-dccb5a630e2f6?q=80&w=1528&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1606041008023-472dfb5e530f?q=80&w=1528&auto=format&fit=crop"
   },
   {
     id: "4",
@@ -257,7 +257,7 @@ const projectsData: Project[] = [
         email: "youth.agribusiness@agriculture.go.ke"
       }
     },
-    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1528&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1495107334309-fcf20f6a8343?q=80&w=1470&auto=format&fit=crop"
   },
   {
     id: "7",
@@ -299,7 +299,7 @@ const projectsData: Project[] = [
         email: "rural.roads@transport.go.ke"
       }
     },
-    imageUrl: "https://images.unsplash.com/photo-1545807190-2157ecaa5097?q=80&w=1528&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1518899711965-a2a94f8a09a4?q=80&w=1474&auto=format&fit=crop"
   },
   {
     id: "8",
@@ -341,7 +341,7 @@ const projectsData: Project[] = [
         email: "urban.lighting@nms.go.ke"
       }
     },
-    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1528&auto=format&fit=crop"
+    imageUrl: "https://images.unsplash.com/photo-1625813506062-0aeb70b6a1b9?q=80&w=1374&auto=format&fit=crop"
   }
 ];
 
