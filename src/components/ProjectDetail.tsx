@@ -1,8 +1,14 @@
-
 import { Project } from "@/types/project";
 import { formatCurrency } from "@/lib/utils";
-import { Calendar, Mail, Phone } from "lucide-react";
+import { Calendar, Mail, Phone, Flag, Upload } from "lucide-react";
 import { Progress } from "./ui/progress";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProjectDetailProps {
   project: Project;
@@ -10,6 +16,33 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail = ({ project, onClose }: ProjectDetailProps) => {
+  const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleReportSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsReportDialogOpen(false);
+      
+      // Reset form
+      setReportCategory("");
+      setReportDescription("");
+      
+      // Show success toast
+      toast({
+        title: "Report Submitted",
+        description: "Thank you for your feedback. Your report has been submitted successfully.",
+      });
+    }, 1000);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
       <button
@@ -20,12 +53,23 @@ const ProjectDetail = ({ project, onClose }: ProjectDetailProps) => {
       </button>
 
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-secondary mb-2">{project.title}</h1>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <span>📍 {project.location.city}, {project.location.county}</span>
-            <span className="chip">{project.sector}</span>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold text-secondary mb-2">{project.title}</h1>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <span>📍 {project.location.city}, {project.location.county}</span>
+              <span className="chip">{project.sector}</span>
+            </div>
           </div>
+          <Button 
+            variant="destructive" 
+            size="sm" 
+            className="flex items-center gap-2"
+            onClick={() => setIsReportDialogOpen(true)}
+          >
+            <Flag className="h-4 w-4" />
+            Report Issue
+          </Button>
         </div>
 
         <div>
@@ -115,6 +159,121 @@ const ProjectDetail = ({ project, onClose }: ProjectDetailProps) => {
           </div>
         </div>
       </div>
+
+      <Dialog open={isReportDialogOpen} onOpenChange={setIsReportDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-xl">Report an Issue</DialogTitle>
+            <DialogDescription>
+              Help us improve by reporting issues with this project. Your feedback matters.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <form onSubmit={handleReportSubmit} className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label htmlFor="category" className="text-sm font-medium">Report Category</label>
+              <Select value={reportCategory} onValueChange={setReportCategory} required>
+                <SelectTrigger id="category">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="delay">Project Delay</SelectItem>
+                  <SelectItem value="mismanagement">Mismanagement of Funds</SelectItem>
+                  <SelectItem value="completion">Project Completion</SelectItem>
+                  <SelectItem value="other">Other Issues</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="description" className="text-sm font-medium">Description</label>
+              <Textarea 
+                id="description" 
+                placeholder="Please describe the issue in detail..." 
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                className="min-h-[120px]"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="evidence" className="text-sm font-medium">Upload Evidence (Optional)</label>
+              <div className="border-2 border-dashed border-muted rounded-md p-4 text-center cursor-pointer hover:bg-muted/50 transition-colors">
+                <Input 
+                  id="evidence" 
+                  type="file" 
+                  className="hidden" 
+                  accept="image/*,video/*" 
+                  multiple
+                />
+                <label htmlFor="evidence" className="cursor-pointer flex flex-col items-center">
+                  <Upload className="h-8 w-8 text-muted-foreground mb-2" />
+                  <span className="text-sm text-muted-foreground">
+                    Click to upload or drag and drop
+                  </span>
+                  <span className="text-xs text-muted-foreground mt-1">
+                    Images or videos (max 10MB)
+                  </span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="location" className="text-sm font-medium">Location (Optional)</label>
+              <Input 
+                id="location" 
+                type="text" 
+                placeholder="Enter location or share your current location" 
+                defaultValue={`${project.location.city}, ${project.location.county}`}
+              />
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm" 
+                className="mt-1 text-xs"
+                onClick={() => {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                        toast({
+                          title: "Location detected",
+                          description: `Lat: ${position.coords.latitude}, Long: ${position.coords.longitude}`,
+                        });
+                      },
+                      () => {
+                        toast({
+                          title: "Location error",
+                          description: "Unable to get your location. Please enable location services.",
+                          variant: "destructive",
+                        });
+                      }
+                    );
+                  }
+                }}
+              >
+                Use Current Location
+              </Button>
+            </div>
+            
+            <DialogFooter className="mt-6">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setIsReportDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                type="submit" 
+                disabled={isSubmitting || !reportCategory || !reportDescription}
+              >
+                {isSubmitting ? "Submitting..." : "Submit Report"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 
 import { Progress } from "./ui/progress";
 import { Card, CardContent } from "./ui/card";
+import { AlertTriangle, CheckCircle, Clock } from "lucide-react";
 
 interface ProjectCardProps {
   title: string;
@@ -24,6 +25,32 @@ const ProjectCard = ({
   // Default placeholder image if imageUrl is not provided
   const defaultImage = "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1470&auto=format&fit=crop";
   
+  const getStatusIcon = () => {
+    switch (status) {
+      case "completed":
+        return <CheckCircle className="h-4 w-4 mr-1" />;
+      case "delayed":
+        return <AlertTriangle className="h-4 w-4 mr-1" />;
+      case "ongoing":
+        return <Clock className="h-4 w-4 mr-1" />;
+      default:
+        return null;
+    }
+  };
+
+  const getStatusClass = () => {
+    switch (status) {
+      case "completed":
+        return "bg-green-100 text-green-800";
+      case "delayed":
+        return "bg-red-100 text-red-800";
+      case "ongoing":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+  
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="w-full h-48 overflow-hidden">
@@ -39,7 +66,8 @@ const ProjectCard = ({
             <h3 className="text-lg font-semibold text-secondary mb-2">{title}</h3>
             <p className="text-sm text-muted-foreground mb-4">{description}</p>
           </div>
-          <div className={`status-chip ${status}`}>
+          <div className={`flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${getStatusClass()}`}>
+            {getStatusIcon()}
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </div>
         </div>
